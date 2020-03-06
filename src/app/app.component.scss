@@ -1,0 +1,9 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+  input.ng-dirty.ng-invalid {
+    border: 2px solid #a94442;
+  }
+
+  input.ng-dirty.ng-valid {
+    border: 2px solid #42A948;
+  }
