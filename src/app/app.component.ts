@@ -3,7 +3,6 @@ import { UsersService } from './service/users.service';
 import { FormControl, FormGroup,  Validators, NgForm } from '@angular/forms';
 // import { ControlGroup } from '@angular/common';
 declare var $: any;
-// import * as $ from 'jquery';
 
 @Component({
   selector: 'app-root',
@@ -62,7 +61,7 @@ export class AppComponent implements OnInit {
       this.isFormValid = true;
     }
   }
-  
+
 
   editUser(user) {
     this.isNewUser = false;
