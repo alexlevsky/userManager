@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { UsersService } from './service/users.service';
 import { FormControl, FormGroup,  Validators, NgForm } from '@angular/forms';
+import {DialogWindowEditUserComponent} from "./dialog-window-edit-user/dialog-window-edit-user.component";
+import {MatDialog} from "@angular/material/dialog";
 // import { ControlGroup } from '@angular/common';
 declare var $: any;
 
@@ -19,8 +21,9 @@ export class AppComponent implements OnInit {
   public checkIfValid = false;
   public isNewUser = false;
   public isFormValid = true;
+  displayedColumns: string[] = ['id', 'name', 'email', 'city', 'edit'];
 
-  constructor(private _users: UsersService, private cdr: ChangeDetectorRef) { 
+  constructor(private _users: UsersService, private cdr: ChangeDetectorRef, public dialog: MatDialog) {
       this._users.getUsers().subscribe(users => this.users = users);
    }
   ngOnInit() {
@@ -45,6 +48,19 @@ export class AppComponent implements OnInit {
    if (this.isNewUser) {
     this.users.push(this.modUser);
    }
+  }
+
+  openEditWindow(event, element){
+   // console.log(event, element);
+
+    const dialogRef = this.dialog.open(DialogWindowEditUserComponent, {
+      width: '250px',
+      data: element
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   checkName(newUser, name) {

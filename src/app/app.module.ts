@@ -5,19 +5,36 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UsersService } from './service/users.service';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogWindowEditUserComponent } from './dialog-window-edit-user/dialog-window-edit-user.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from "@angular/material";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogWindowEditUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [UsersService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DialogWindowEditUserComponent
+  ]
 })
 export class AppModule { }
