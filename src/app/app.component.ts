@@ -54,12 +54,12 @@ export class AppComponent implements OnInit {
    // console.log(event, element);
 
     const dialogRef = this.dialog.open(DialogWindowEditUserComponent, {
-      width: '250px',
+      width: '350px',
       data: element
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log(result);
     });
   }
 
