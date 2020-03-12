@@ -1,87 +1,61 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, AfterViewInit, OnChanges, ViewChild} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {MatTable, MatTableDataSource} from '@angular/material';
+
 import { UsersService } from './service/users.service';
-import { FormControl, FormGroup,  Validators, NgForm } from '@angular/forms';
-import {DialogWindowEditUserComponent} from "./dialog-window-edit-user/dialog-window-edit-user.component";
-import {MatDialog} from "@angular/material/dialog";
-// import { ControlGroup } from '@angular/common';
-declare var $: any;
+import {DialogWindowEditUserComponent} from './dialog-window-edit-user/dialog-window-edit-user.component';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  public users;
-  public name;
-  public email;
-  public city;
-  public modUser =  { id: 0, name: "", email: "", address: { city: "" }};
-  public newUser =  { id: 0, name: "", email: "", address: { city: "" }};
-  public checkIfValid = false;
-  public isNewUser = false;
-  public isFormValid = true;
-  displayedColumns: string[] = ['id', 'name', 'email', 'city', 'edit'];
+export class AppComponent implements OnInit, AfterViewInit, OnChanges {
 
-  constructor(private _users: UsersService, private cdr: ChangeDetectorRef, public dialog: MatDialog) {
-      this._users.getUsers().subscribe(users => this.users = users);
+  public users = JSON.parse(localStorage.getItem('Users'));
+  public isLoadingResults = true;
+  public dataSource;
+  @ViewChild(MatTable, {static: false}) mat: MatTable<any>;
+
+
+  constructor(private _users: UsersService,  public dialog: MatDialog) {
+      
+      this._users.getUsers().subscribe(users => {
+        this.users = users;
+      //  localStorage.setItem('Users', JSON.stringify(this.users));
+        this.dataSource = new MatTableDataSource(users);
+        this.isLoadingResults = true;
+      });
+     //this.dataSource = new MatTableDataSource(_users.getUsers());
    }
+
   ngOnInit() {
-      this._users.getUsers().subscribe(users => this.users = users);
-  }
-  createUser() {
-    this.modUser = this.newUser;
-    this.isNewUser = true;
-    $('#myModal').modal('show');
-  }
-  submitUser(name, email, city) {
-    console.log(name.value);
-   this.checkIfValid = true;
-   if (this.isFormValid) {
-    let i = this.modUser.id - 1; 
-    this.users[i].name = name.value;
-    this.users[i].email = email.value;
-    this.users[i].city = city.value;
-   } else {
-      return;
-   }
-   if (this.isNewUser) {
-    this.users.push(this.modUser);
-   }
+
   }
 
-  openEditWindow(event, element){
-   // console.log(event, element);
+  ngOnChanges() {
+  //   const self = this;
+  // setTimeout(()=>{
+  //   self.mat.renderRows();
+  // }, 5000);
+   
+  }
 
+  ngAfterViewInit() {
+    console.log('ngAfterviewInit');
+  }
+
+
+  openEditWindow(event, element) {
     const dialogRef = this.dialog.open(DialogWindowEditUserComponent, {
-      width: '350px',
+      width: '355px',
       data: element
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
     });
   }
-
-  checkName(newUser, name) {
-    if (name.status === 'INVALID') {
-      this.isFormValid = false;
-    } else {
-      this.isFormValid = true;
-    }
-  }
-  checkEmail(newUser, email) {
-    if (email.status === 'INVALID') {
-      this.isFormValid = false;
-    } else {
-      this.isFormValid = true;
-    }
-  }
-
-
-  editUser(user) {
-    this.isNewUser = false;
-    this.modUser = user;
-    $('#myModal').modal('show');
-  }
 }
+

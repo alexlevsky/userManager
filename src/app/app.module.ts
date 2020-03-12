@@ -6,12 +6,13 @@ import { AppComponent } from './app.component';
 import { UsersService } from './service/users.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogWindowEditUserComponent } from './dialog-window-edit-user/dialog-window-edit-user.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from "@angular/material";
+
+import { DialogWindowEditUserComponent } from './dialog-window-edit-user/dialog-window-edit-user.component';
 
 @NgModule({
   declarations: [

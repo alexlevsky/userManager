@@ -14,10 +14,10 @@
     <p *ngIf="userForm.controls.email.errors?.required" class="errors">Email is required</p>
     <!--<p *ngIf="userForm.controls.email.errors?.pattern" class="errors">Email don`t has valid form</p>-->
   <mat-form-field>
+
     <mat-label>City</mat-label>
     <input matInput placeholder="city" class="form-control" formControlName="city">
-  </mat-form-field>
-
+    </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
