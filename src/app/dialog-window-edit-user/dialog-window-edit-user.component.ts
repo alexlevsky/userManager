@@ -1,11 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-dialog-window-edit-user',
   templateUrl: './dialog-window-edit-user.component.html',
-  styleUrls: ['./dialog-window-edit-user.component.scss']
+  styleUrls: ['./dialog-window-edit-user.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogWindowEditUserComponent implements OnInit {
   private userForm;
