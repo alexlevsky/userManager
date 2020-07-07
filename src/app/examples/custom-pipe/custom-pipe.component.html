@@ -1,0 +1,11 @@
+<p>
+  custom-pipe works!
+</p>
+<h1>{{ name | example: 'dddd' : 'sss' : 'bbbb' }}</h1>
+
+<ng-container *ngFor="let user of (users$ | async )">
+  <h5>{{ user?.name }}</h5>
+  </ng-container>
+
+  <button (click)="add_User()">add User</button>
+  <button (click)="delete_User()">delete User</button>

@@ -1,0 +1,22 @@
+<h4>select Language</h4>
+<mat-form-field>
+  <mat-label>Language</mat-label>
+  <mat-select [formControl]="language" [(value)]="selectedLanguage" (selectionChange)="selectLanguage($event)">
+    <mat-option *ngFor="let lang of languageList" [value]="lang"> {{lang}} </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<h2>{{'Sitetitle' | translate }}</h2>
+
+<span class="form-inline">
+  <select 
+      class="form-control" 
+      #selectedLang 
+      (change)="switchLang(selectedLang.value)">
+    <option *ngFor="let language of translate.getLangs()" 
+      [value]="language"
+      [selected]="language === translate.currentLang">
+      {{ language }}
+    </option>
+  </select>
+</span>

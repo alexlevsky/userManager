@@ -32,7 +32,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnChanges {
   //     this.mat.dataSource = new MatTableDataSource<User>(users);
   //    // debugger;
   //   });
-    this.users$ = this._users.getUsers();
+  //  this._users.getUsers().subscribe((users) => {
+  //    this.mat.dataSource = new MatTableDataSource<User>(users);
+  //    this.cd.detectChanges();
+  //  });
    // this.dataSource.data = this.users;
     this.cd.detectChanges();
   }

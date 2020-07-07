@@ -9,7 +9,7 @@ import {FormBuilder, Validators} from "@angular/forms";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogWindowEditUserComponent implements OnInit {
-  private userForm;
+  public userForm;
 
   constructor(
     public dialogRef: MatDialogRef<DialogWindowEditUserComponent>,

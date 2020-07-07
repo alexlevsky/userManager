@@ -1,0 +1,23 @@
+<p [appExample]="green" >
+  custom-directive works!
+</p>
+
+<ng-template [appStructuralDirective]="true">
+  (B) Although the condition is true,
+  this paragraph is displayed because appUnless is set to false.
+</ng-template>
+
+<ng-container *ngFor="let user of (users$ | async )">
+<h5>{{ user?.name }}</h5>
+</ng-container>
+
+<button id="increment" (click)="increment()">Increment</button>
+
+<div>Current Count: {{ count$ | async }}</div>
+
+<button id="decrement" (click)="decrement()">Decrement</button>
+
+<button id="reset" (click)="reset()">Reset Counter</button>
+
+<button (click)="add_User()">add User</button>
+<button (click)="delete_User()">delete User</button>
