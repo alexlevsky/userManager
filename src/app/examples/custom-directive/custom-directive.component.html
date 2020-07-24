@@ -21,3 +21,24 @@
 
 <button (click)="add_User()">add User</button>
 <button (click)="delete_User()">delete User</button>
+
+<ng-container *ngFor="let post of (posts$ | async )">
+  <h5>{{ post?.id }} {{ post?.title }}</h5>
+  </ng-container>
+
+  <button (click)="addPost()">add post</button>
+  <button (click)="deletePost()">delete post</button>
+
+  <ng-container *ngFor="let comment of (comments$ | async )">
+    <h5>{{ comment?.id }} {{ comment?.name }}</h5>
+    </ng-container>
+
+    <button (click)="addComment()">add comment</button>
+  <button (click)="deleteComment()">delete comment</button>
+
+    <ng-container *ngFor="let todo of (todos$ | async )">
+      <h5>{{ todo?.id }}  {{ todo?.title }}</h5>
+    </ng-container>
+
+    <button (click)="addTodo()">add todo</button>
+    <button (click)="deleteTodo()">delete todo</button>

@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { InternatiolizationComponent } from './examples/internatiolization/internatiolization.component';
-import { CustomPipeComponent } from './examples/custom-pipe/custom-pipe.component';
-import { CustomDirectiveComponent } from './examples/custom-directive/custom-directive.component';
-
 
 const routes: Routes = [
-  { path: 'internatiolization', component: InternatiolizationComponent },
-  { path: 'custompipe', component: CustomPipeComponent },
-  { path: 'exampledirective', component: CustomDirectiveComponent }
+  { path: '', pathMatch: 'full', redirectTo: '/welcome' },
+  { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) },
+  { path: 'was', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) }
 ];
 
 @NgModule({
