@@ -1,0 +1,51 @@
+<button nz-button nzType="primary" (click)="add()">Add User</button>
+    <nz-table #editRowTable nzBordered [nzData]="(users$ | async)">
+      <thead>
+        <tr>
+          <th nzWidth="40%">Name</th>
+          <th nzWidth="20%">Email</th>
+          <th nzWidth="15%">Phone</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of editRowTable.data">
+          <td>
+            <ng-container *ngIf="!editCache[data.id]?.edit; else nameInputTplName">
+              {{ data.name }}
+            </ng-container>
+            <ng-template #nameInputTplName>
+              <input type="text" nz-input [(ngModel)]="editCache[data.id].data.name" />
+            </ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="!editCache[data.id]?.edit; else nameInputTplEmail">
+              {{ data.email }}
+            </ng-container>
+            <ng-template #nameInputTplEmail>
+              <input type="text" nz-input [(ngModel)]="editCache[data.id].data.email" />
+            </ng-template>
+          </td><td>
+            <ng-container *ngIf="!editCache[data.id]?.edit; else nameInputTplPhone">
+              {{ data.phone }}
+            </ng-container>
+            <ng-template #nameInputTplPhone>
+              <input type="text" nz-input [(ngModel)]="editCache[data.id].data.phone" />
+            </ng-template>
+          </td>
+          <td>
+            <div class="editable-row-operations">
+              <ng-container *ngIf="!editCache[data.id]?.edit; else saveTpl">
+                <a (click)="startEdit(data.id)">Edit</a>
+                <a (click)="delete(data.id)">Delete</a>
+              </ng-container>
+              <ng-template #saveTpl>
+                <a (click)="saveEdit(data.id)">Save</a>
+                <a nz-popconfirm nzTitle="Sure to cancel?" (nzOnConfirm)="cancelEdit(data.id)">Cancel</a>
+              </ng-template>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  

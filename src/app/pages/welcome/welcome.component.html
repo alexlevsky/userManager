@@ -1,67 +1,62 @@
-<body>
-    <h1>jsQR Demo</h1>
-    <a id="githubLink" href="https://github.com/cozmo/jsQR">View documentation on Github</a>
-    <p>Pure JavaScript QR code decoding library.</p>
-    <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
-    <canvas id="canvas" hidden=""></canvas>
-    <div id="output" hidden="">
-      <div id="outputMessage">No QR code detected.</div>
-      <div hidden=""><b>Data:</b> <span id="outputData"></span></div>
-    </div>
-    <script>
-      var video = document.createElement("video");
-      var canvasElement = document.getElementById("canvas");
-      var canvas = canvasElement.getContext("2d");
-      var loadingMessage = document.getElementById("loadingMessage");
-      var outputContainer = document.getElementById("output");
-      var outputMessage = document.getElementById("outputMessage");
-      var outputData = document.getElementById("outputData");
-  
-      function drawLine(begin, end, color) {
-        canvas.beginPath();
-        canvas.moveTo(begin.x, begin.y);
-        canvas.lineTo(end.x, end.y);
-        canvas.lineWidth = 4;
-        canvas.strokeStyle = color;
-        canvas.stroke();
-      }
-  
-      // Use facingMode: environment to attemt to get the front camera on phones
-      navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
-        video.srcObject = stream;
-        video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-        video.play();
-        requestAnimationFrame(tick);
-      });
-  
-      function tick() {
-        loadingMessage.innerText = "⌛ Loading video..."
-        if (video.readyState === video.HAVE_ENOUGH_DATA) {
-          loadingMessage.hidden = true;
-          canvasElement.hidden = false;
-          outputContainer.hidden = false;
-  
-          canvasElement.height = video.videoHeight;
-          canvasElement.width = video.videoWidth;
-          canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-          var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-          var code = jsQR(imageData.data, imageData.width, imageData.height, {
-            inversionAttempts: "dontInvert",
-          });
-          if (code) {
-            drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-            drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-            drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-            drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-            outputMessage.hidden = true;
-            outputData.parentElement.hidden = false;
-            outputData.innerText = code.data;
-          } else {
-            outputMessage.hidden = false;
-            outputData.parentElement.hidden = true;
-          }
-        }
-        requestAnimationFrame(tick);
-      }
-    </script>
-  </body>
+<li *ngFor="let t of times">
+  <h4>{{ t.id }}</h4>
+    <nz-date-picker
+    nzShowTime
+    nzFormat="yyyy-MM-dd HH:mm:ss"
+    nzPlaceHolder="Select Time"
+    [(ngModel)]="t.time"
+    (ngModelChange)="onChange($event)"
+    (nzOnOk)="onOk($event)"
+  ></nz-date-picker>
+  <br>
+</li>
+<button nz-button (click)="addOne()" nzType="primary">Add one</button>
+<button nz-button (click)="setTimers()" nzType="primary">set All Timers</button>
+<button nz-button [nzType]="'primary'" (click)="createNotifications()">
+  Open the notification box
+</button>
+<button nz-button (click)="createMessage('success')">Success</button>
+<nz-calendar [(ngModel)]="selectedValue" (nzSelectChange)="selectChange($event)">
+  <ul *nzDateCell="let date" class="events">
+    <ng-container [ngSwitch]="date">
+      <ng-container *ngSwitchCase="'Thu Jan 12 2017 00:00:00 GMT+0200 (Eastern European Standard Time)'">
+        <li *ngFor="let item of listDataMap.ten">
+          <nz-badge [nzStatus]="item.type" [nzText]="item.content"></nz-badge>
+        </li>
+      </ng-container>
+    </ng-container>
+  </ul>
+</nz-calendar>
+
+<nz-modal
+      [(nzVisible)]="isVisible"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+    >
+      <ng-template #modalTitle>
+        My Task {{ selectedValue | date : 'medium' }}
+      </ng-template>
+
+      <ng-template #modalContent>
+        <nz-timeline nzMode="alternate">
+          <nz-timeline-item nzColor="red">write some code</nz-timeline-item>
+          <nz-timeline-item nzColor="green">merge all branch</nz-timeline-item>
+          <nz-timeline-item nzColor="blue">breakfast</nz-timeline-item>
+          <nz-timeline-item nzColor="red">read documentation</nz-timeline-item>
+          <nz-timeline-item nzColor="yellow">learn angular</nz-timeline-item>
+          <nz-timeline-item nzColor="green">debug function</nz-timeline-item>
+          <nz-timeline-item nzColor="blue">testing software</nz-timeline-item>
+        </nz-timeline>
+      </ng-template>
+
+      <ng-template #dotTemplate>
+        <i nz-icon nzType="clock-circle-o" style="font-size: 16px;"></i>
+      </ng-template>
+      <ng-template #modalFooter>
+        <span>Actions </span>
+        <button nz-button nzType="default" (click)="handleCancel()">Callback</button>
+        <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Submit</button>
+      </ng-template>
+    </nz-modal>

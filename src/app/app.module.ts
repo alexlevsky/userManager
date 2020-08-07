@@ -35,6 +35,16 @@ import { IconsProviderModule } from './icons-provider.module';
 import { NgZorroAntdModule, NZ_I18N, uk_UA } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import uk from '@angular/common/locales/uk';
+import { StatisticsModule } from './pages/statistics/statistics.module';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { TableComponent } from './pages/table/table.component';
+import { UsersComponent } from './pages/models/users/users.component';
+import { PostsComponent } from './pages/models/posts/posts.component';
+import { CommentsComponent } from './pages/models/comments/comments.component';
+import { AlbumsComponent } from './pages/models/albums/albums.component';
+import { PhotosComponent } from './pages/models/photos/photos.component';
+import { TodosComponent } from './pages/models/todos/todos.component';
 
 registerLocaleData(uk);
 
@@ -63,7 +73,16 @@ export const entityMetadata: EntityMetadataMap = {
 @NgModule({
   declarations: [
     AppComponent,
-    DialogWindowEditUserComponent
+    DialogWindowEditUserComponent,
+    LoginPageComponent,
+    RegisterPageComponent,
+    TableComponent,
+    UsersComponent,
+    PostsComponent,
+    CommentsComponent,
+    AlbumsComponent,
+    PhotosComponent,
+    TodosComponent
   ],
   imports: [
     BrowserModule,
@@ -92,6 +111,7 @@ export const entityMetadata: EntityMetadataMap = {
     }),
     IconsProviderModule,
     NgZorroAntdModule,
+    StatisticsModule
   ],
   providers: [
     UsersService,
